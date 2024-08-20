@@ -1,7 +1,7 @@
 <?php
 
 use App\Classes\Validation;
-use App\classes\Visit;
+use App\Classes\Visit;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 

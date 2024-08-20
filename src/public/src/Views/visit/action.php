@@ -10,8 +10,8 @@ $action = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
 $param1 = (isset($param[1]) ? $param[1] : "");
 $param2 = (isset($param[2]) ? $param[2] : "");
 
-use App\classes\Validation;
-use App\classes\Visit;
+use App\Classes\Validation;
+use App\Classes\Visit;
 
 $VISIT = new Visit();
 $VALIDATION = new Validation();

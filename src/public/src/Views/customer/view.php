@@ -5,7 +5,7 @@ include_once(__DIR__ . "/../layout/header.php");
 $param = (isset($params) ? explode("/", $params) : die(header("Location: /error")));
 $uuid = (isset($param[0]) ? $param[0] : die(header("Location: /error")));
 
-use App\classes\Visit;
+use App\Classes\Visit;
 
 $VISIT = new Visit();
 $row = $VISIT->customer_view([$uuid]);

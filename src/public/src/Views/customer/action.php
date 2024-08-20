@@ -6,7 +6,7 @@ date_default_timezone_set("Asia/Bangkok");
 include_once(__DIR__ . "/../../../vendor/autoload.php");
 
 use App\Classes\Validation;
-use App\classes\Visit;
+use App\Classes\Visit;
 
 $VISIT = new Visit();
 $VALIDATION = new Validation();
