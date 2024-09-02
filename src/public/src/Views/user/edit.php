@@ -56,7 +56,7 @@ $inactive = (intval($row['status']) === 2 ? "checked" : "");
             </div>
           </div>
           <div class="row mb-2">
-            <label class="col-xl-2 offset-xl-2 col-form-label">นามสกุล</label>
+            <label class="col-xl-2 offset-xl-2 col-form-label">ทีม</label>
             <div class="col-xl-4">
               <input type="text" class="form-control form-control-sm" name="lastname" value="<?php echo $lastname ?>" required>
               <div class="invalid-feedback">

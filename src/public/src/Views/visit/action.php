@@ -12,9 +12,30 @@ $param2 = (isset($param[2]) ? $param[2] : "");
 
 use App\Classes\Validation;
 use App\Classes\Visit;
+use App\Classes\User;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
+try {
+  define("JWT_SECRET", "SECRET-KEY");
+  define("JWT_ALGO", "HS512");
+  $jwt = (isset($_COOKIE['jwt']) ? $_COOKIE['jwt'] : "");
+  if (empty($jwt)) {
+    die(header("Location: /"));
+  }
+  $decode = JWT::decode($jwt, new Key(JWT_SECRET, JWT_ALGO));
+  $email = (isset($decode->data) ? $decode->data : "");
+} catch (Exception $e) {
+  $msg = $e->getMessage();
+  if ($msg === "Expired token") {
+    die(header("Location: /logout"));
+  }
+}
+
+$USER = new User();
 $VISIT = new Visit();
 $VALIDATION = new Validation();
+$user = $USER->user_view_email([$email]);
 
 if ($action === "create") {
   try {
@@ -145,7 +166,7 @@ if ($action === "customer-detail") {
 
 if ($action === "request-data") {
   try {
-    $result = $VISIT->request_data();
+    $result = $VISIT->request_data($user['id']);
 
     echo json_encode($result);
   } catch (PDOException $e) {

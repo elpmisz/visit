@@ -30,7 +30,7 @@ include_once(__DIR__ . "/../layout/header.php");
                     <th width="10%">สิทธิ์</th>
                     <th width="20%">อีเมล</th>
                     <th width="20%">ชื่อ</th>
-                    <th width="20%">นามสกุล</th>
+                    <th width="20%">ทีม</th>
                     <th width="20%">ติดต่อ</th>
                   </tr>
                 </thead>

@@ -182,7 +182,7 @@ class Visit
     return $stmt->execute($data);
   }
 
-  public function request_data()
+  public function request_data($user)
   {
     $sql = "SELECT COUNT(*) FROM visit.request";
     $stmt = $this->dbcon->prepare($sql);
@@ -237,7 +237,8 @@ class Visit
     ON a.user_id = b.login
     LEFT JOIN visit.customer c
     ON a.customer_id = c.id
-    WHERE a.status = 1 ";
+    WHERE a.status = 1
+    AND a.user_id = {$user} ";
 
     if ($keyword) {
       $sql .= " AND (a.remark LIKE '%{$keyword}%' OR b.firstname LIKE '%{$keyword}%' OR c.user LIKE '%{$keyword}%' OR c.name LIKE '%{$keyword}%' OR c.contact LIKE '%{$keyword}%' OR c.project LIKE '%{$keyword}%') ";

@@ -32,7 +32,7 @@ include_once(__DIR__ . "/../layout/header.php");
             </div>
           </div>
           <div class="row mb-2">
-            <label class="col-xl-2 offset-xl-2 col-form-label">นามสกุล</label>
+            <label class="col-xl-2 offset-xl-2 col-form-label">ทีม</label>
             <div class="col-xl-4">
               <input type="text" class="form-control form-control-sm" name="lastname" required>
               <div class="invalid-feedback">
