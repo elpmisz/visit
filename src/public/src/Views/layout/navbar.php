@@ -17,65 +17,38 @@
         <li class=" nav-item">
           <a class="nav-link" href="/home">
             <i class="fa fa-home pr-2"></i>
-            <span class="font-weight-bold">HOME</span>
+            <span class="font-weight-bold">รายงาน</span>
           </a>
         </li>
         <li class=" nav-item dropdown">
           <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown">
             <i class="fa fa-list pr-2"></i>
-            <span class="font-weight-bold">USER</span>
+            <span class="font-weight-bold">ข้อมูลส่วนตัว</span>
             <i class="fas fa-caret-down pl-2"></i>
           </a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/user/profile">
               <i class="fa fa-address-book pr-2"></i>
-              <span class="font-weight-bold">PROFILE</span>
+              <span class="font-weight-bold">รายละเอียด</span>
             </a>
             <a class="dropdown-item" href="/user/change">
               <i class="fa fa-key pr-2"></i>
-              <span class="font-weight-bold">CHANGE PASSWORD</span>
+              <span class="font-weight-bold">เปลี่ยนรหัสผ่าน</span>
             </a>
           </div>
         </li>
         <li class=" nav-item dropdown">
           <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown">
             <i class="fa fa-list pr-2"></i>
-            <span class="font-weight-bold">SERVICE</span>
+            <span class="font-weight-bold">บริการ</span>
             <i class="fas fa-caret-down pl-2"></i>
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/helpdesk">
-              <i class="fa fa-phone pr-2"></i>
-              <span class="font-weight-bold">HELPDESK</span>
-            </a>
-            <a class="dropdown-item" href="/maintenance">
-              <i class="fa fa-desktop pr-2"></i>
-              <span class="font-weight-bold">MAINTENANCE</span>
+            <a class="dropdown-item" href="/visit">
+              <i class="fa fa-bars pr-2"></i>
+              <span class="font-weight-bold">Visit</span>
             </a>
           </div>
-        </li>
-        <li class=" nav-item dropdown">
-          <a class="nav-link" href="javascript:void(0)" data-toggle="dropdown">
-            <i class="fa fa-list pr-2"></i>
-            <span class="font-weight-bold">SETTING</span>
-            <i class="fas fa-caret-down pl-2"></i>
-          </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/system">
-              <i class="fa fa-gear pr-2"></i>
-              <span class="font-weight-bold">SYSTEM</span>
-            </a>
-            <a class="dropdown-item" href="/user">
-              <i class="fa fa-users pr-2"></i>
-              <span class="font-weight-bold">USER</span>
-            </a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link logout-btn" href="javascript:void(0)">
-            <i class="fa fa-sign-out pr-2"></i>
-            <span class="font-weight-bold">LOGOUT</span>
-          </a>
         </li>
       </ul>
 
