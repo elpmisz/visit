@@ -12,6 +12,26 @@ include_once(__DIR__ . "/../layout/header.php");
       </div>
       <div class="card-body">
 
+        <div class="row justify-content-end mb-2">
+          <div class="col-xl-3 mb-2">
+            <input type="text" class="form-control form-control-sm date-select" placeholder="-- วันที่ --">
+          </div>
+          <div class="col-xl-3 mb-2">
+            <select class="form-control form-control-sm user-select"></select>
+          </div>
+          <div class="col-xl-3 mb-2">
+            <select class="form-control form-control-sm type-select"></select>
+          </div>
+          <div class="col-xl-3 mb-2">
+            <select class="form-control form-control-sm reason-select"></select>
+          </div>
+          <div class="col-xl-3 mb-2">
+            <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-block search-btn">
+              <i class="fas fa-search pr-2"></i>ค้นหา
+            </a>
+          </div>
+        </div>
+
         <div class="row mb-2">
           <div class="col-xl-12">
             <div class="table-responsive">
@@ -50,7 +70,22 @@ include_once(__DIR__ . "/../layout/header.php");
 <script>
   filter_datatable();
 
-  function filter_datatable() {
+  $(document).on("click", ".search-btn", function() {
+    let date = ($(".date-select").val() !== null ? $(".date-select").val() : "");
+    let user = ($(".user-select").val() !== null ? $(".user-select").val() : "");
+    let type = ($(".type-select").val() !== null ? $(".type-select").val() : "");
+    let reason = ($(".reason-select").val() !== null ? $(".reason-select").val() : "");
+
+    if (date || user || type || reason) {
+      $(".manage-data").DataTable().destroy();
+      filter_datatable(date, user, type, reason);
+    } else {
+      $(".manage-data").DataTable().destroy();
+      filter_datatable();
+    }
+  });
+
+  function filter_datatable(date, user, type, reason) {
     $(".manage-data").DataTable({
       serverSide: true,
       searching: true,
@@ -59,6 +94,12 @@ include_once(__DIR__ . "/../layout/header.php");
       ajax: {
         url: "/visit/manage-data",
         type: "POST",
+        data: {
+          date: date,
+          user: user,
+          type: type,
+          reason: reason,
+        }
       },
       columnDefs: [{
         targets: [0, 2],
@@ -123,5 +164,92 @@ include_once(__DIR__ . "/../layout/header.php");
         return false;
       }
     })
+  });
+
+  $(".date-select").on("keydown paste", function(e) {
+    e.preventDefault();
+  });
+
+  $(".date-select").daterangepicker({
+    autoUpdateInput: false,
+    showDropdowns: true,
+    startDate: moment(),
+    endDate: moment().startOf("day").add(1, "day"),
+    locale: {
+      "format": "DD/MM/YYYY",
+      "applyLabel": "ยืนยัน",
+      "cancelLabel": "ยกเลิก",
+      "daysOfWeek": [
+        "อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"
+      ],
+      "monthNames": [
+        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+      ]
+    },
+    "applyButtonClasses": "btn-success",
+    "cancelClass": "btn-danger"
+  });
+
+  $(".date-select").on("apply.daterangepicker", function(ev, picker) {
+    $(this).val(picker.startDate.format("DD/MM/YYYY") + ' - ' + picker.endDate.format("DD/MM/YYYY"));
+  });
+
+  $(".date-select").on("cancel.daterangepicker", function(ev, picker) {
+    $(this).val('');
+  });
+
+  $(".user-select").select2({
+    placeholder: "--- ผู้ทำรายการ ---",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/visit/user-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(".type-select").select2({
+    placeholder: "--- ประเภทลูกค้า ---",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/visit/type-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $(".reason-select").select2({
+    placeholder: "--- วัถตุประสงค์ ---",
+    allowClear: true,
+    width: "100%",
+    ajax: {
+      url: "/visit/reason-select",
+      method: "POST",
+      dataType: "json",
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
   });
 </script>

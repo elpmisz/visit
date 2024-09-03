@@ -47,6 +47,7 @@ if ($action === "create") {
     $customer_contact = (isset($_POST['customer_contact']) ? $_POST['customer_contact'] : "");
     $customer_project = (isset($_POST['customer_project']) ? $_POST['customer_project'] : "");
     $reason = (isset($_POST['reason']) ? $_POST['reason'] : "");
+    $opportunity = (isset($_POST['opportunity']) ? $_POST['opportunity'] : "");
     $remark = (isset($_POST['remark']) ? $_POST['remark'] : "");
     $latitude = (isset($_POST['latitude']) ? $_POST['latitude'] : "");
     $longitude = (isset($_POST['longitude']) ? $_POST['longitude'] : "");
@@ -59,7 +60,7 @@ if ($action === "create") {
 
     $request_count = $VISIT->request_count([$customer_id, $remark]);
     if (intval($request_count) === 0) {
-      $VISIT->request_create([$user_id, $type, $customer_id, $reason, $remark, $latitude, $longitude]);
+      $VISIT->request_create([$user_id, $type, $customer_id, $reason, $opportunity, $remark, $latitude, $longitude]);
     }
 
     $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/visit");
@@ -166,7 +167,10 @@ if ($action === "customer-detail") {
 
 if ($action === "request-data") {
   try {
-    $result = $VISIT->request_data($user['id']);
+    $date = (isset($_POST["date"]) ? $_POST["date"] : "");
+    $type = (isset($_POST["type"]) ? $_POST["type"] : "");
+    $reason = (isset($_POST["reason"]) ? $_POST["reason"] : "");
+    $result = $VISIT->request_data($user['id'], $date, $type, $reason);
 
     echo json_encode($result);
   } catch (PDOException $e) {
@@ -176,7 +180,11 @@ if ($action === "request-data") {
 
 if ($action === "manage-data") {
   try {
-    $result = $VISIT->manage_data();
+    $date = (isset($_POST["date"]) ? $_POST["date"] : "");
+    $user = (isset($_POST["user"]) ? $_POST["user"] : "");
+    $type = (isset($_POST["type"]) ? $_POST["type"] : "");
+    $reason = (isset($_POST["reason"]) ? $_POST["reason"] : "");
+    $result = $VISIT->manage_data($date, $user, $type, $reason);
 
     echo json_encode($result);
   } catch (PDOException $e) {
@@ -187,6 +195,44 @@ if ($action === "manage-data") {
 if ($action === "auth-data") {
   try {
     $result = $VISIT->auth_data();
+
+    echo json_encode($result);
+  } catch (PDOException $e) {
+    die($e->getMessage());
+  }
+}
+
+if ($action === "type-select") {
+  try {
+    $data = ["ลูกค้าใหม่", "ลูกค้าเก่า"];
+
+    $result = [];
+    foreach ($data as $key => $value) {
+      $key++;
+      $result[] = [
+        "id" => $key,
+        "text" => $value,
+      ];
+    }
+
+    echo json_encode($result);
+  } catch (PDOException $e) {
+    die($e->getMessage());
+  }
+}
+
+if ($action === "reason-select") {
+  try {
+    $data = ["นำเสนอ", "คุยงาน", "เสนอราคา"];
+
+    $result = [];
+    foreach ($data as $key => $value) {
+      $key++;
+      $result[] = [
+        "id" => $key,
+        "text" => $value,
+      ];
+    }
 
     echo json_encode($result);
   } catch (PDOException $e) {

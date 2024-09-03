@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Aug 20, 2024 at 08:54 AM
+-- Generation Time: Sep 03, 2024 at 09:51 AM
 -- Server version: 11.5.2-MariaDB-ubu2404
--- PHP Version: 8.2.22
+-- PHP Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -105,7 +105,8 @@ CREATE TABLE `request` (
   `user_id` int(11) NOT NULL,
   `type` int(1) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `reason` int(11) NOT NULL,
+  `reason` int(1) NOT NULL,
+  `opportunity` int(1) NOT NULL,
   `remark` mediumtext NOT NULL,
   `latitude` varchar(50) NOT NULL,
   `longitude` varchar(50) NOT NULL,
@@ -118,10 +119,10 @@ CREATE TABLE `request` (
 -- Dumping data for table `request`
 --
 
-INSERT INTO `request` (`id`, `uuid`, `user_id`, `type`, `customer_id`, `reason`, `remark`, `latitude`, `longitude`, `status`, `updated`, `created`) VALUES
-(1, 0x65396137653866612d356563332d313165662d39, 1, 1, 1, 1, 'Point architect พี่อาร์ม เข้าพบทีมสถาปนิกนำเสนอสินค้า \r\nและติดตามงานออกแบบ เบื้องต้นก่อนหน้านี้ใช้cotto เป็นหลัก \r\nพี่อาร์มให้ความสนใจจะส่งข้อมูล ให้เทียบ \r\nกำลังออกแบบวิลล่า7หลัง  Bali Villa @Samui \r\nและขอแผงตัวอย่าง กลุ่ม Artifact Stone 1 cm ด้วย', '13.7374995', '100.5570484', 1, '2024-08-20 14:40:21', '2024-08-20 14:14:59'),
-(3, 0x34343237643734362d356564312d313165662d39, 1, 2, 2, 2, 'So architect พบคุณเนี๊ยบ คุยงานบ้านพักส่วนตัว เอากระเบื้องเทียบตามtive เข้ามาให้เลือก\r\nคุณเนี๊ยบจะเอาไปเสนอowner และจะพาทางownerเข้ามาดูกระเบื้องที่โชว์รูมอีกทีค่ะ', '13.7374995', '100.5570484', 1, NULL, '2024-08-20 15:50:34'),
-(4, 0x38303662663133352d356564312d313165662d39, 1, 1, 3, 1, 'greymatter นำกระเบื้องฟูบอดี้เอามาให้คุณออมของโครงการ M level\r\nและนำตัวอย่างลาย terrazzo มาให้คุณมัดมี่ของโครงการ โรงแรมที่ภูเก็ตค่ะ', '13.7374995', '100.5570484', 1, NULL, '2024-08-20 15:52:15');
+INSERT INTO `request` (`id`, `uuid`, `user_id`, `type`, `customer_id`, `reason`, `opportunity`, `remark`, `latitude`, `longitude`, `status`, `updated`, `created`) VALUES
+(1, 0x65396137653866612d356563332d313165662d39, 1, 1, 1, 1, 0, 'Point architect พี่อาร์ม เข้าพบทีมสถาปนิกนำเสนอสินค้า \r\nและติดตามงานออกแบบ เบื้องต้นก่อนหน้านี้ใช้cotto เป็นหลัก \r\nพี่อาร์มให้ความสนใจจะส่งข้อมูล ให้เทียบ \r\nกำลังออกแบบวิลล่า7หลัง  Bali Villa @Samui \r\nและขอแผงตัวอย่าง กลุ่ม Artifact Stone 1 cm ด้วย', '13.7374995', '100.5570484', 1, '2024-08-20 14:40:21', '2024-08-20 14:14:59'),
+(3, 0x34343237643734362d356564312d313165662d39, 1, 2, 2, 2, 0, 'So architect พบคุณเนี๊ยบ คุยงานบ้านพักส่วนตัว เอากระเบื้องเทียบตามtive เข้ามาให้เลือก\r\nคุณเนี๊ยบจะเอาไปเสนอowner และจะพาทางownerเข้ามาดูกระเบื้องที่โชว์รูมอีกทีค่ะ', '13.7374995', '100.5570484', 1, NULL, '2024-08-20 15:50:34'),
+(4, 0x38303662663133352d356564312d313165662d39, 1, 1, 3, 1, 0, 'greymatter นำกระเบื้องฟูบอดี้เอามาให้คุณออมของโครงการ M level\r\nและนำตัวอย่างลาย terrazzo มาให้คุณมัดมี่ของโครงการ โรงแรมที่ภูเก็ตค่ะ', '13.7374995', '100.5570484', 1, NULL, '2024-08-20 15:52:15');
 
 -- --------------------------------------------------------
 

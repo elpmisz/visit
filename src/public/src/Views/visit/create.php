@@ -127,7 +127,53 @@ include_once(__DIR__ . "/../layout/header.php");
               </div>
             </div>
           </div>
-
+          <div class="row mb-2">
+            <label class="col-xl-3 offset-xl-1 col-form-label">Sales Opportunity</label>
+            <div class="col-xl-8">
+              <div class="row">
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="1" name="opportunity" id="10">
+                    <label class="form-check-label" for="10">
+                      <span class="text-danger">10%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="2" name="opportunity" id="30">
+                    <label class="form-check-label" for="30">
+                      <span class="text-warning">30%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="3" name="opportunity" id="50">
+                    <label class="form-check-label" for="50">
+                      <span class="text-info">50%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="4" name="opportunity" id="70">
+                    <label class="form-check-label" for="70">
+                      <span class="text-primary">70%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="5" name="opportunity" id="100">
+                    <label class="form-check-label" for="100">
+                      <span class="text-success">100%</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row mb-2">
             <label class="col-xl-3 offset-xl-1 col-form-label">รายละเอียดเพิ่มเติม</label>
             <div class="col-xl-6">
@@ -157,12 +203,12 @@ include_once(__DIR__ . "/../layout/header.php");
           </div>
 
           <div class="row mb-2 justify-content-center">
-            <div class="col-xl-3">
+            <div class="col-xl-3 mb-2">
               <button type="submit" class="btn btn-success btn-sm btn-block">
                 <i class="fas fa-check pr-2"></i>ยืนยัน
               </button>
             </div>
-            <div class="col-xl-3">
+            <div class="col-xl-3 mb-2">
               <a href="/visit" class="btn btn-danger btn-sm btn-block">
                 <i class="fas fa-arrow-left pr-2"></i>กลับ
               </a>

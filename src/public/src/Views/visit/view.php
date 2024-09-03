@@ -98,6 +98,53 @@ $row = $VISIT->request_view([$uuid]);
               </div>
             </div>
           </div>
+          <div class="row mb-2">
+            <label class="col-xl-3 offset-xl-1 col-form-label">Sales Opportunity</label>
+            <div class="col-xl-8">
+              <div class="row">
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="1" name="opportunity" id="10" <?php echo (intval($row['opportunity']) === 1 ? "checked" : "") ?>>
+                    <label class="form-check-label" for="10">
+                      <span class="text-danger">10%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="2" name="opportunity" id="30" <?php echo (intval($row['opportunity']) === 2 ? "checked" : "") ?>>
+                    <label class="form-check-label" for="30">
+                      <span class="text-warning">30%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="3" name="opportunity" id="50" <?php echo (intval($row['opportunity']) === 3 ? "checked" : "") ?>>
+                    <label class="form-check-label" for="50">
+                      <span class="text-info">50%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="4" name="opportunity" id="70" <?php echo (intval($row['opportunity']) === 4 ? "checked" : "") ?>>
+                    <label class="form-check-label" for="70">
+                      <span class="text-primary">70%</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check pt-2">
+                    <input class="form-check-input" type="radio" value="5" name="opportunity" id="100" <?php echo (intval($row['opportunity']) === 5 ? "checked" : "") ?>>
+                    <label class="form-check-label" for="100">
+                      <span class="text-success">100%</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="row mb-2">
             <label class="col-xl-3 offset-xl-1 col-form-label">รายละเอียดเพิ่มเติม</label>
@@ -110,12 +157,12 @@ $row = $VISIT->request_view([$uuid]);
           </div>
 
           <div class="row mb-2 justify-content-center">
-            <div class="col-xl-3">
+            <div class="col-xl-3 mb-2">
               <button type="submit" class="btn btn-success btn-sm btn-block">
                 <i class="fas fa-check pr-2"></i>ยืนยัน
               </button>
             </div>
-            <div class="col-xl-3">
+            <div class="col-xl-3 mb-2">
               <a href="/visit" class="btn btn-danger btn-sm btn-block">
                 <i class="fas fa-arrow-left pr-2"></i>กลับ
               </a>

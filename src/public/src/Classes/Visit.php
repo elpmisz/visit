@@ -76,7 +76,7 @@ class Visit
     $sql = "SELECT a.id,a.`uuid`,a.user_id,
     b.firstname,CONCAT(b.firstname,' ',b.lastname) fullname,
     a.`type`,a.customer_id,a.latitude,a.longitude,
-    c.`user` customer_user,c.`name` customer_name,c.contact customer_contact,c.project customer_project,a.reason,
+    c.`user` customer_user,c.`name` customer_name,c.contact customer_contact,c.project customer_project,a.reason,a.opportunity,
     (
       CASE
         WHEN a.type = 1 THEN 'ลูกค้าใหม่'
@@ -182,14 +182,14 @@ class Visit
     return $stmt->execute($data);
   }
 
-  public function request_data($user)
+  public function request_data($user, $date, $type, $reason)
   {
     $sql = "SELECT COUNT(*) FROM visit.request";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute();
     $total = $stmt->fetchColumn();
 
-    $column = ["a.id", "a.name", "a.token"];
+    $column = ["a.id", "b.firstname", "a.reason", "c.user", "c.name", "c.project", "a.remark", "a.created"];
 
     $keyword = (isset($_POST['search']['value']) ? trim($_POST['search']['value']) : '');
     $filter_order = (isset($_POST['order']) ? $_POST['order'] : '');
@@ -198,6 +198,10 @@ class Visit
     $limit_start = (isset($_POST['start']) ? $_POST['start'] : '');
     $limit_length = (isset($_POST['length']) ? $_POST['length'] : '');
     $draw = (isset($_POST['draw']) ? $_POST['draw'] : '');
+
+    $date = (!empty($date) ? explode("-", $date) : "");
+    $start = (!empty($date[0]) ? trim($date[0]) : "");
+    $end = (!empty($date[1]) ? trim($date[1]) : "");
 
     $sql = "SELECT a.id,a.`uuid`,b.firstname,CONCAT(b.firstname,' ',b.lastname) fullname,a.remark,
     c.`user` customer_user,c.`name` customer_name,c.project customer_project,
@@ -243,6 +247,15 @@ class Visit
     if ($keyword) {
       $sql .= " AND (a.remark LIKE '%{$keyword}%' OR b.firstname LIKE '%{$keyword}%' OR c.user LIKE '%{$keyword}%' OR c.name LIKE '%{$keyword}%' OR c.contact LIKE '%{$keyword}%' OR c.project LIKE '%{$keyword}%') ";
     }
+    if (!empty($type)) {
+      $sql .= " AND a.type = {$type} ";
+    }
+    if (!empty($reason)) {
+      $sql .= " AND a.reason = {$reason} ";
+    }
+    if (!empty($start) && !empty($end)) {
+      $sql .= " AND DATE(a.created) BETWEEN STR_TO_DATE('{$start}', '%d/%m/%Y') AND STR_TO_DATE('{$end}', '%d/%m/%Y') ";
+    }
 
     if ($filter_order) {
       $sql .= " ORDER BY {$column[$order_column]} {$order_dir} ";
@@ -265,11 +278,11 @@ class Visit
     $data = [];
     foreach ($result as $row) {
       $action = "<a href='/visit/view/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a>";
-      $reason = "<a href='javascript:void(0)' class='badge badge-{$row['reason_color']} font-weight-light'>{$row['reason_name']}</a>";
+      $reason_status = "<a href='javascript:void(0)' class='badge badge-{$row['reason_color']} font-weight-light'>{$row['reason_name']}</a>";
       $data[] = [
         $action,
         $row['fullname'],
-        $reason,
+        $reason_status,
         $row['customer_user'],
         $row['customer_name'],
         $row['customer_project'],
@@ -288,7 +301,7 @@ class Visit
     return $output;
   }
 
-  public function manage_data()
+  public function manage_data($date, $user, $type, $reason)
   {
     $sql = "SELECT COUNT(*) FROM visit.request";
     $stmt = $this->dbcon->prepare($sql);
@@ -304,6 +317,10 @@ class Visit
     $limit_start = (isset($_POST['start']) ? $_POST['start'] : '');
     $limit_length = (isset($_POST['length']) ? $_POST['length'] : '');
     $draw = (isset($_POST['draw']) ? $_POST['draw'] : '');
+
+    $date = (!empty($date) ? explode("-", $date) : "");
+    $start = (!empty($date[0]) ? trim($date[0]) : "");
+    $end = (!empty($date[1]) ? trim($date[1]) : "");
 
     $sql = "SELECT a.id,a.`uuid`,b.firstname,CONCAT(b.firstname,' ',b.lastname) fullname,a.remark,
     c.`user` customer_user,c.`name` customer_name,c.project customer_project,
@@ -343,10 +360,22 @@ class Visit
     ON a.user_id = b.login
     LEFT JOIN visit.customer c
     ON a.customer_id = c.id
-    WHERE a.status = 1 ";
+    WHERE a.status IN (1,2) ";
 
     if ($keyword) {
       $sql .= " AND (a.remark LIKE '%{$keyword}%' OR b.firstname LIKE '%{$keyword}%' OR c.user LIKE '%{$keyword}%' OR c.name LIKE '%{$keyword}%' OR c.contact LIKE '%{$keyword}%' OR c.project LIKE '%{$keyword}%') ";
+    }
+    if (!empty($user)) {
+      $sql .= " AND a.user_id = {$user} ";
+    }
+    if (!empty($type)) {
+      $sql .= " AND a.type = {$type} ";
+    }
+    if (!empty($reason)) {
+      $sql .= " AND a.reason = {$reason} ";
+    }
+    if (!empty($start) && !empty($end)) {
+      $sql .= " AND DATE(a.created) BETWEEN STR_TO_DATE('{$start}', '%d/%m/%Y') AND STR_TO_DATE('{$end}', '%d/%m/%Y') ";
     }
 
     if ($filter_order) {
@@ -370,11 +399,11 @@ class Visit
     $data = [];
     foreach ($result as $row) {
       $action = "<a href='/visit/edit/{$row['uuid']}' class='badge badge-{$row['status_color']} font-weight-light'>{$row['status_name']}</a> <a href='javascript:void(0)' class='badge badge-danger font-weight-light btn-delete' id='{$row['id']}'>ลบ</a>";
-      $reason = "<a href='javascript:void(0)' class='badge badge-{$row['reason_color']} font-weight-light'>{$row['reason_name']}</a>";
+      $reason_status = "<a href='javascript:void(0)' class='badge badge-{$row['reason_color']} font-weight-light'>{$row['reason_name']}</a>";
       $data[] = [
         $action,
         $row['fullname'],
-        $reason,
+        $reason_status,
         $row['customer_user'],
         $row['customer_name'],
         $row['customer_project'],
