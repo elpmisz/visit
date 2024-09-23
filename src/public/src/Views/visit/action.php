@@ -63,6 +63,22 @@ if ($action === "create") {
       $VISIT->request_create([$user_id, $type, $customer_id, $reason, $opportunity, $remark, $latitude, $longitude]);
     }
 
+    $type_name = (intval($type) === 1 ? "ลูกค้าใหม่" : "ลูกค้าเก่า");
+    $reason_name = (intval($reason) === 1 ? "นำเสนอ" : (intval($reason) === 2 ? "คุยงาน" : "เสนอราคา"));
+    $date = date("d/m/Y, H:i น.");
+    $text = "
+แจ้งเตือน Visit Plan
+ผู้ทำรายการ: {$user['fullname']}
+ประเภทลูกค้า: {$type_name}
+บริษัท: {$customer_name}
+วัถตุประสงค์: {$reason_name}
+รายละเอียดเพิ่มเติม:
+{$remark}
+{$date}
+    ";
+    $token = "acJ8lhYKWN5yzrHIr2B9WDvGtMinCjzKy6cekQwf9Za";
+    $VALIDATION->line_notify($token, $text);
+
     $VALIDATION->alert("success", "ดำเนินการเรียบร้อย!", "/visit");
   } catch (PDOException $e) {
     die($e->getMessage());
